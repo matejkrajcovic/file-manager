@@ -1,28 +1,27 @@
 #include "window.h"
-#include <iostream>
+#include <boost/filesystem.hpp>
 
 Window::Window() {
-	set_border_width(5);
-	set_title("File Manager");
+    set_border_width(5);
+    set_title("File Manager");
 
-	add(fileListView);
+    add(fileListView);
 
-	fileListModel = Gtk::ListStore::create(fileListColumns);
+    fileListModel = Gtk::ListStore::create(fileListColumns);
 
-	fileListView.set_model(fileListModel);
+    fileListView.set_model(fileListModel);
 
-	Gtk::TreeModel::Row row = *(fileListModel->append());
-	row[fileListColumns.fileName] = "file.cc";
+    boost::filesystem::path path("/");
+    boost::filesystem::directory_iterator dir_iterator(path);
 
-	row = *(fileListModel->append());
-	row[fileListColumns.fileName] = "hello-world";
+    for (auto entry : dir_iterator) {
+        Gtk::TreeModel::Row row = *(fileListModel->append());
+        row[fileListColumns.fileName] = entry.path().filename().c_str();
+    }
 
-	row = *(fileListModel->append());
-	row[fileListColumns.fileName] = "file.h";
+    fileListView.append_column("File name", fileListColumns.fileName);
 
-	fileListView.append_column("File name", fileListColumns.fileName);
-
-	show_all_children();
+    show_all_children();
 }
 
 Window::~Window() {}
