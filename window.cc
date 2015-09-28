@@ -5,7 +5,8 @@ Window::Window() {
     set_border_width(5);
     set_title("File Manager");
 
-    add(fileListView);
+    scrolledWindow.add(fileListView);
+    add(scrolledWindow);
 
     fileListModel = Gtk::ListStore::create(fileListColumns);
 

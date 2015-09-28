@@ -23,6 +23,7 @@ protected:
 	FileListColumns fileListColumns;
 
 	Gtk::TreeView fileListView;
+	Gtk::ScrolledWindow scrolledWindow;
 	Glib::RefPtr<Gtk::ListStore> fileListModel;
 };
 
