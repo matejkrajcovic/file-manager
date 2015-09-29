@@ -1,6 +1,7 @@
 #ifndef FILE_MANAGER_WINDOW_H
 #define FILE_MANAGER_WINDOW_H
 
+#include "file_list_view.h"
 #include <gtkmm.h>
 
 class Window : public Gtk::Window {
@@ -10,21 +11,7 @@ public:
 	virtual ~Window();
 
 protected:
-	class FileListColumns : public Gtk::TreeModel::ColumnRecord {
-
-	public:
-		FileListColumns() {
-			add(fileName);
-		};
-
-		Gtk::TreeModelColumn<Glib::ustring> fileName;
-	};
-
-	FileListColumns fileListColumns;
-
-	Gtk::TreeView fileListView;
-	Gtk::ScrolledWindow scrolledWindow;
-	Glib::RefPtr<Gtk::ListStore> fileListModel;
+    FileListView fileListView;
 };
 
 #endif // FILE_MANAGER_WINDOW_H
